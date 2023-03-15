@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">JingGPT</h1>
+    <input type="text" id="question"/>
+    <input type="button" onclick="AskQuestion()" name="send" value="Send" />
+    <br />
+    <text id="textQuestion"></text>
+    <text id="asnwer"></text>
+</div>
+
+<script>
+    function AskQuestion(){
+        var q = document.getElementById('question')
+        var a = document.getElementById('asnwer')
+        var query = q.value
+        a.innerText += q.value
+        q.value = ''
+
+        fetch(`https://localhost:7275/Home/Get?question=${query}`)
+            .then(function (response) {             
+                return response.text();
+            })
+            .then(function (data) {              
+                a.innerText += data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+   
+</script>
